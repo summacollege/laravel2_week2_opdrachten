@@ -1,0 +1,4 @@
+
+php artisan migrate
+
+php artisan vendor:publish --tag=jetstream-views
