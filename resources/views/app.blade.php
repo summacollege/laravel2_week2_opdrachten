@@ -14,8 +14,10 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
+    @livewireStyles
 </head>
 <body class="bg-red-100">
-
+    <livewire:job-list>
+    @livewireScripts
 </body>
 </html>
