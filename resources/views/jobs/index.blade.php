@@ -10,7 +10,11 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body class="bg-indigo-500 text-center text-white">
-    @yield('content')
+    <livewire:JobsList />
     @livewireScripts
 </body>
 </html>
+{{-- @extends('layouts.app')
+@section('content')
+    <livewire:JobsList>
+@endsection --}}
