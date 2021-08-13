@@ -8,11 +8,14 @@ use App\Models\Job;
 
 class JobList extends Component
 {
+    public $searchDesc;
     public $jobs;
 
     public function render()
     {
-        $this->jobs = Job::all();
+        $searchDesc = '%' . $this->searchDesc . '%';
+        $this->jobs = Job::where('job_desc', 'like', $searchDesc)->get();
         return view('livewire.job-list');
     }
+
 }
