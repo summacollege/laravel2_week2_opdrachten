@@ -25,7 +25,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('jobs.create');
     }
 
     /**
@@ -36,7 +36,13 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'job_desc' => 'required|max:50',
+            'min_lvl' => 'required|numeric',
+            'max_lvl' => 'required|numeric',
+        ]);
+        Job::create($request->all());
+        return redirect()->route("jobs.index");
     }
 
     /**
@@ -47,7 +53,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        //
+        return view("jobs.show", ["jobUitDeController"=>$job]);
     }
 
     /**
@@ -58,7 +64,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return view("jobs.edit", ["jobUitDeController"=>$job]);
     }
 
     /**
@@ -70,7 +76,14 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        //
+        // dd($request);
+        $request->validate([
+            'job_desc' => 'required|max:50',
+            'min_lvl' => 'required|numeric',
+            'max_lvl' => 'required|numeric',
+        ]);
+        $job->update($request->all());
+        return redirect()->route("jobs.index");
     }
 
     /**
@@ -81,6 +94,8 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        // dd($job);
+        $job->delete();
+        return redirect()->route("jobs.index");
     }
 }
