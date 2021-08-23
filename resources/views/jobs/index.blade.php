@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Jobs') }}
         </h2>
     </x-slot>
 
@@ -46,11 +46,11 @@
                                 </td>
                                 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                  <div class="text-sm text-gray-900">{{ $job->job_desc }}</div>
+                                  <div class="text-sm text-gray-900">{{ $job->min_lvl }}</div>
                                 </td>
                 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $job->job_desc }}</div>
+                                    <div class="text-sm text-gray-900">{{ $job->max_lvl }}</div>
                                 </td>
                                 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

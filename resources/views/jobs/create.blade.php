@@ -1,8 +1,13 @@
-<x-guest-layout>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Create new job') }}
+        </h2>
+    </x-slot>
+
     <x-jet-authentication-card>
         <x-slot name="logo">
             {{-- <x-jet-authentication-card-logo /> --}}
-            Create new job
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -32,4 +37,4 @@
             </div>
         </form>
     </x-jet-authentication-card>
-</x-guest-layout>
+</x-app-layout>
