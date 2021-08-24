@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
@@ -32,7 +33,15 @@ class JobController extends Controller
      */
     public function create()
     {
-        return view('jobs.create');
+        $jobs = Job::all();
+        if(Auth::user()->name == 'student2')
+        {
+            return view('jobs.create');
+        }
+        else
+        {
+            return redirect('/dashboard');
+        }       
     }
 
     /**
@@ -60,7 +69,14 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        return view("jobs.show", ["jobUitDeController"=>$job]);
+        if(Auth::user()->name == 'student2')
+        {
+            return view("jobs.show", ["jobUitDeController"=>$job]);
+        }
+        else
+        {
+            return redirect('/dashboard');
+        }
     }
 
     /**
@@ -71,7 +87,14 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        return view("jobs.edit", ["jobUitDeController"=>$job]);
+        if(Auth::user()->name == 'student2')
+        {
+            return view("jobs.edit", ["jobUitDeController"=>$job]);
+        }
+        else
+        {
+            return redirect('/dashboard');
+        }  
     }
 
     /**
