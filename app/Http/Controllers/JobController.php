@@ -15,14 +15,7 @@ class JobController extends Controller
     public function index()
     {
         $jobs = Job::all();
-        if(Auth::user()->name == 'student2')
-        {
-            return view('jobs.index', ['jobs'=>$jobs]);
-        }
-        else
-        {
-            return redirect('/dashboard');
-        }
+        return view('jobs.index', ['jobs'=>$jobs]);
     }
 
     /**
