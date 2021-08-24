@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 class JobController extends Controller
 {
@@ -15,7 +18,28 @@ class JobController extends Controller
     public function index()
     {
         $jobs = Job::all();
-        return view('jobs.index', ['jobs'=>$jobs]);
+        // $user = Auth::user();
+        // $teamId = $user->currentTeam->id;
+        // $team = Team::where('id', 3)->first();
+        // $permissions = ['edit'];
+        // $permission = $user->teamPermissions($team);
+        // if(in_array($permission[0], $permissions))
+        // {
+        //     return view('jobs.index', ['jobs'=>$jobs]);
+        // }
+        // else
+        // {
+        //     return redirect('/dashboard');
+        // }
+        $permissions = ['edit', 'read'];
+        if($this->authorized($permissions))
+        {
+            return view('jobs.index', ['jobs'=>$jobs]);
+        }
+        else
+        {
+            return redirect('/dashboard');
+        }
     }
 
     /**
@@ -25,7 +49,15 @@ class JobController extends Controller
      */
     public function create()
     {
-        return view('jobs.create');
+        $permissions = ['edit'];
+        if($this->authorized($permissions))
+        {
+            return view('jobs.create');
+        }
+        else
+        {
+            return redirect('/dashboard');
+        }
     }
 
     /**
@@ -53,7 +85,15 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        return view("jobs.show", ["jobUitDeController"=>$job]);
+        $permissions = ['edit', 'read'];
+        if($this->authorized($permissions))
+        {
+            return view("jobs.show", ["jobUitDeController"=>$job]);
+        }
+        else
+        {
+            return redirect('/dashboard');
+        }        
     }
 
     /**
@@ -64,7 +104,15 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        return view("jobs.edit", ["jobUitDeController"=>$job]);
+        $permissions = ['edit'];
+        if($this->authorized($permissions))
+        {
+            return view("jobs.edit", ["jobUitDeController"=>$job]);
+        }
+        else
+        {
+            return redirect('/dashboard');
+        } 
     }
 
     /**
@@ -98,4 +146,22 @@ class JobController extends Controller
         $job->delete();
         return redirect()->route("jobs.index");
     }
+
+    public function authorized(Array $permissions)
+    {
+        $user = Auth::user();
+        $teamId = $user->currentTeam->id;
+        $team = Team::where('id', 3)->first();
+        $permission = $user->teamPermissions($team);
+        $owns = $user->ownsTeam($team);
+        if(in_array($permission[0], $permissions) or ($owns))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
 }

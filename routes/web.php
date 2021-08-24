@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -27,4 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::resource('jobs', JobController::class);
+// Route::resource('jobs', JobController::class);
+Route::group(['middleware'=>['auth:sanctum', 'verified']], function () {
+    Route::resource('jobs', JobController::class);
+});
